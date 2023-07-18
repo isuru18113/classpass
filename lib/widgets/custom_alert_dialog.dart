@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class customDialg {
   final String title;
@@ -10,7 +11,7 @@ class customDialg {
    showAlertDialog() {
     // set up the button
     Widget okButton = TextButton(
-      child: Text("OK"),
+      child: Text(AppLocalizations.of(context)!.button_ok),
       onPressed: () {
         Navigator.pop(context);
       },

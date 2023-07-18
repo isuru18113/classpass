@@ -1,0 +1,43 @@
+{
+  "@@locale": "en",
+  "app_title": "Fast Shopping",
+  "@@app_title": {
+    "description": "Shown on top of the screen."
+  },
+
+  "admin_auth_page_title": "Phone Number",
+
+  "admin_auth_page_content": "You will recive a text message to authnecicate to ideenty. thank you",
+  "incorrect_number_title": "Incorrect",
+  "incorrect_number_content": "You have enterd incorrect number, please enter a correct nuumber",
+
+
+  "privacy_policy_title": "Privacy & Policy",
+  "privacy_policy_content": "I have read privacy polices and I will accept",
+  "term_and_condition_title": "Terms & Conditions",
+  "term_and_condition_content": "I have read term and condtions and I accept condtions",
+
+  "button_next": "NEXT",
+  "button_ok": "OK",
+
+
+
+  "hello_message": "Hello {userName}",
+  "@hello_message": {
+    "description": "A message with a single parameter",
+    "placeholders": {
+      "userName": {
+        "type": "String",
+        "example": "Bob"
+      }
+    }
+  },
+  "greeting": "Welcome",
+  "@greeting": {
+    "description": "A general greeting"
+  }
+
+
+}
+
+

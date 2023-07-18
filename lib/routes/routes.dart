@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../main.dart';
 import '../screens/authentication_pages/admin_authentication_page.dart';
 import '../screens/landing_page/landing_page.dart';
+import '../screens/user_registration_pages/register_selection.dart';
 
 
 
@@ -15,6 +16,7 @@ import '../screens/landing_page/landing_page.dart';
 class Routes {
 
   static const String adminAuthenticationPage = "/adminAuthentication";
+  static const String registerSelectionPage = "/registerSelection";
   static const String landingPage = "/";
 
   static GoRouter buildRouter() {
@@ -43,6 +45,14 @@ class Routes {
         return const AdminAuthenticationPage();
       },
     ),
+
+      GoRoute(
+        name: 'registerSelectionPage',
+        path: registerSelectionPage,
+        builder: (BuildContext context, GoRouterState state) {
+          return  TutorSelectionScreen();
+        },
+      ),
 
 
     ];
