@@ -17,9 +17,19 @@
   "term_and_condition_title": "Terms & Conditions",
   "term_and_condition_content": "I have read term and condtions and I accept condtions",
 
+  "register_selection_title": "Registration",
+  "register_selection_academic_teacher": "academic teacher",
+  "register_selection_academic_teacher_content": "Private Tutor",
+  "register_selection_sport_coach": "Sport Coach",
+  "register_selection_sport_coach_content": "spoart coach b",
+  "register_selection_institute": "Institute",
+  "register_selection_institute_content": "Institute",
+
   "button_next": "NEXT",
   "button_ok": "OK",
 
+
+  "not_available": "Not Available",
 
 
   "hello_message": "Hello {userName}",

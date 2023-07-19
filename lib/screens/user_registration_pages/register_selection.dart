@@ -1,91 +1,139 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-enum TutorType {
+enum RegistrationType {
   institute,
-  privateTutor,
+  academicTeacher,
+  sportCoach
 }
 
 class TutorSelectionScreen extends StatefulWidget {
+  const TutorSelectionScreen({super.key});
+
   @override
   _TutorSelectionScreenState createState() => _TutorSelectionScreenState();
 }
 
 class _TutorSelectionScreenState extends State<TutorSelectionScreen> {
-  TutorType _selectedTutorType = TutorType.institute;
+  RegistrationType selectedTutorType = RegistrationType.institute;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Select Tutor Type'),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          InkWell(
-            onTap: () {
-              setState(() {
-                _selectedTutorType = TutorType.institute;
-              });
-            },
-            child: buildTutorCard(
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.register_selection_title),
+        ),
+        body: registerSelectionWidget());
+  }
 
-              title: 'Institute',
-              isSelected: _selectedTutorType == TutorType.institute,
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              setState(() {
-                _selectedTutorType = TutorType.privateTutor;
-              });
-            },
-            child: buildTutorCard(
+  Widget registerSelectionWidget() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: academicTeacher(),
+        ),
 
-              title: 'Private Tutor',
-              isSelected: _selectedTutorType == TutorType.privateTutor,
-            ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Use _selectedTutorType to perform further actions
-              // For example, based on the selected type, navigate to the respective screen or show specific content.
-            },
-            child: Text('Submit'),
-          ),
-        ],
-      ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: sportCoach(),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: institute(),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align(alignment: Alignment.centerRight, child: nextButton()),
+        )
+      ],
     );
   }
 
-  Widget buildTutorCard({
+  ///Next Button
+  Widget nextButton() {
+    return FilledButton(
+        onPressed: () {
 
-    required String title,
-    required bool isSelected,
-  }) {
-    return Card(
-      elevation: isSelected ? 4.0 : 2.0,
-      color: isSelected ? Colors.blue[100] : Colors.white,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
+        },
+        child: Text(AppLocalizations.of(context)!.button_next));
+  }
 
-          ),
-          Positioned(
-            top: 16.0,
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
+  ///Private Tutor button
+  Widget academicTeacher() {
+    return ListTile(
+      selected: selectedTutorType == RegistrationType.academicTeacher,
+      selectedTileColor: Theme.of(context).colorScheme.primaryContainer,
+      selectedColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      title:
+          Text(AppLocalizations.of(context)!.register_selection_academic_teacher),
+      subtitle: Text(AppLocalizations.of(context)!
+          .register_selection_academic_teacher_content),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+            color: Theme.of(context).colorScheme.primaryContainer, width: 1),
+        borderRadius: BorderRadius.circular(5),
       ),
+      onTap: () {
+        setState(() {
+
+          selectedTutorType = RegistrationType.academicTeacher;
+
+        });
+      },
+    );
+  }
+
+  ///Sport coach button
+  Widget sportCoach() {
+    return ListTile(
+      selected: selectedTutorType == RegistrationType.sportCoach,
+      selectedTileColor: Theme.of(context).colorScheme.primaryContainer,
+      selectedColor: Theme.of(context).colorScheme.onPrimaryContainer,
+      title:
+      Text(AppLocalizations.of(context)!.register_selection_sport_coach),
+      subtitle: Text(AppLocalizations.of(context)!
+          .register_selection_sport_coach_content),
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+            color: Theme.of(context).colorScheme.primaryContainer, width: 1),
+        borderRadius: BorderRadius.circular(5),
+      ),
+      onTap: () {
+        setState(() {
+          selectedTutorType = RegistrationType.sportCoach;
+        });
+      },
+    );
+  }
+
+  ///Institute button
+  Widget institute() {
+    return ListTile(
+      selected: false,
+      //selectedTileColor: Theme.of(context).colorScheme.outline,
+      //selectedColor: Theme.of(context).colorScheme.onPrimaryContainer,
+
+      title: Text(AppLocalizations.of(context)!.register_selection_institute),
+      subtitle: Text(
+          AppLocalizations.of(context)!.register_selection_institute_content),
+      trailing: Text(AppLocalizations.of(context)!.not_available),
+
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+            color: Theme.of(context).colorScheme.primaryContainer, width: 1),
+        borderRadius: BorderRadius.circular(5),
+      ),
+
+      // onTap: () {
+      //   setState(() {
+      //     _selectedTutorType = TutorType.institute;
+      //   });
+      // },
     );
   }
 }
