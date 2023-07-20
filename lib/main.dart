@@ -39,7 +39,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
      ),
-     darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
+     darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme,
+
+       appBarTheme: AppBarTheme(
+         centerTitle: true,
+         titleTextStyle:TextStyle(
+             fontWeight: FontWeight.bold,fontSize: 18),
+
+       )
+     ),
     // themeMode: _themeMode,
     localizationsDelegates: AppLocalizations.localizationsDelegates,
     supportedLocales: AppLocalizations.supportedLocales,

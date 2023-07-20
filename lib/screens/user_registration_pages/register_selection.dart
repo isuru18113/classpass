@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../routes/routes.dart';
 
 enum RegistrationType {
   institute,
@@ -58,6 +61,9 @@ class _TutorSelectionScreenState extends State<TutorSelectionScreen> {
   Widget nextButton() {
     return FilledButton(
         onPressed: () {
+
+          //context.go(Routes.registerAccountPage);
+          GoRouter.of(context).push(Routes.registerAccountPage);
 
         },
         child: Text(AppLocalizations.of(context)!.button_next));

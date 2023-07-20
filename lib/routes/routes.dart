@@ -1,8 +1,12 @@
+import 'package:classpass/screens/image_cropper_page/image_cropper_page.dart';
+import 'package:classpass/screens/user_registration_pages/register_account.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 import '../main.dart';
 import '../screens/authentication_pages/admin_authentication_page.dart';
+
+import '../screens/camera_page/camera_page.dart';
 import '../screens/landing_page/landing_page.dart';
 import '../screens/user_registration_pages/register_selection.dart';
 
@@ -17,6 +21,11 @@ class Routes {
 
   static const String adminAuthenticationPage = "/adminAuthentication";
   static const String registerSelectionPage = "/registerSelection";
+  static const String registerAccountPage = "/registerAccount";
+  static const String imageCropperPage = "/imageCropper";
+
+  static const String cameraPage = "/camera";
+
   static const String landingPage = "/";
 
   static GoRouter buildRouter() {
@@ -51,6 +60,32 @@ class Routes {
         path: registerSelectionPage,
         builder: (BuildContext context, GoRouterState state) {
           return  TutorSelectionScreen();
+        },
+      ),
+
+      GoRoute(
+        name: 'registerAccountPage',
+        path: registerAccountPage,
+        builder: (BuildContext context, GoRouterState state) {
+          return  const RegisterAccountPage();
+        },
+      ),
+
+      GoRoute(
+        name: 'imageCropperPage',
+        path: imageCropperPage,
+        builder: (BuildContext context, GoRouterState state) {
+          return  ImageCropperPage(
+            capturedImagePath: state.queryParameters['id1']!
+          );
+        },
+      ),
+
+      GoRoute(
+        name: 'cameraPage',
+        path: cameraPage,
+        builder: (BuildContext context, GoRouterState state) {
+          return  const CameraPage();
         },
       ),
 
