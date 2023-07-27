@@ -1,16 +1,18 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_picker/image_picker.dart';
 
-import '../../routes/routes.dart';
+import '../../utils/image_path_provider.dart';
 
 class ImageCropperPage extends StatefulWidget {
   final String capturedImagePath;
+
 
   const ImageCropperPage({Key? key, required this.capturedImagePath})
       : super(key: key);
@@ -22,7 +24,10 @@ class ImageCropperPage extends StatefulWidget {
 class _ImageCropperPageState extends State<ImageCropperPage> {
   late CustomImageCropController _controllerImageCropper;
 
+  ImagePathProvider imagePathProvider = ImagePathProvider();
+
   String? imagePath;
+  late Image image;
 
   @override
   initState() {
@@ -35,10 +40,12 @@ class _ImageCropperPageState extends State<ImageCropperPage> {
 
   @override
   void dispose() {
+
     super.dispose();
 
     _controllerImageCropper.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +56,33 @@ class _ImageCropperPageState extends State<ImageCropperPage> {
       body: imageCropper(imagePath!),
       bottomNavigationBar: imageCropperControllers(),
       floatingActionButton: FloatingActionButton.extended(
+
         onPressed: () async {
+
           final image = await _controllerImageCropper.onCropImage();
+
           if (image != null) {
-            sendNExt();
+
+          //  print("croped image patrh" + image.toString());
+            Uint8List _image = base64Decode(image.toString());
+          //  final Uint8List imageData = image.bytes;
+
+           // print("Image bytes " + _image.toString());
+
+            // setState(()  {
+            //   imagePathProvider.setImagePath(image);
+            // });
+
+       //     print("set iamge path" + imagePathProvider.imagePath!.bytes.toString());
+
+         //
+            aleertDi(_image);
+
+            //sendNExt();
+
+
+            //sendNExt();
+
             //  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ResultScreen(image: image)));
           }
         },
@@ -61,9 +91,34 @@ class _ImageCropperPageState extends State<ImageCropperPage> {
       ),
     );
   }
+
+  void aleertDi(Uint8List image){
+
+    Uint8List _image = base64Decode(imagePathProvider.imagePath!.bytes.toString());
+
+  //  image = Image.memory(imagePathProvider.imagePath!.bytes);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return  AlertDialog(
+          title: Text("My title"),
+          content: SizedBox(
+            width: 100,
+            child: Image.memory(_image)
+          ),
+          actions: [
+
+          ],
+        );
+      },
+    );
+
+  }
+
 void sendNExt(){
 
-  GoRouter.of(context).push(Routes.registerAccountPage);
+  GoRouter.of(context).pop();
 
 }
   Widget imageCropper(String path) {

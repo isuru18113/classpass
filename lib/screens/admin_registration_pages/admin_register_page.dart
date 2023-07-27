@@ -1,23 +1,33 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../routes/routes.dart';
 import '../../services/get_camera_image.dart';
+import '../../utils/image_path_provider.dart';
 
-class RegisterAccountPage extends StatefulWidget {
-  const RegisterAccountPage({Key? key}) : super(key: key);
+class AdminRegisterPage extends StatefulWidget {
+  const AdminRegisterPage({Key? key}) : super(key: key);
 
   @override
-  _RegisterAccountPageState createState() => _RegisterAccountPageState();
+  _AdminRegisterPageState createState() => _AdminRegisterPageState();
 }
 
-class _RegisterAccountPageState extends State<RegisterAccountPage> {
+class _AdminRegisterPageState extends State<AdminRegisterPage> {
+
+ // String? imagePathProvider = ImagePathProvider().imagePath;
+
   @override
   Widget build(BuildContext context) {
+
+ //   final imagePathProvider = Provider.of<ImagePathProvider>(context);
+
+
     return Scaffold(
 
       appBar: AppBar(
@@ -52,36 +62,41 @@ class _RegisterAccountPageState extends State<RegisterAccountPage> {
     );
   }
 
-  Widget accountImage(String imagePath){
-    return  ListTile(
-      leading: CircleAvatar(
-        radius: 100,
-        child: Image.file(File(imagePath)),
-      ),
-      title: Expanded(child: Text("Account Image"))
-    );
-  }
 
   Widget userAccountImage(){
-    return GridTile(
-      child:  InkWell(
-        onTap: (){
+    return Consumer<ImagePathProvider>(
 
-         // GoRouter.of(context).push(Routes.imageCropperPage);
+      builder: (BuildContext context, value, Widget? child) {
 
-          GetImageFromCamera.getImageFromCamera(context);
+        print("paiyoo " + value.imagePath.toString());
 
-        },
-        customBorder: const CircleBorder(),
-        borderRadius: BorderRadius.circular(100),
-        child: CircleAvatar(
-          radius: 100,
-          child: Icon(Icons.image_rounded,size: 50,),
+        return  GridTile(
 
-        ),
-      ),
+          child:  InkWell(
+
+            onTap: (){
+
+              // GoRouter.of(context).push(Routes.imageCropperPage);
+
+              GetImageFromCamera.getImageFromCamera(context).whenComplete(() {
+
+              });
+
+            },
+            customBorder: const CircleBorder(),
+            borderRadius: BorderRadius.circular(100),
+            child: CircleAvatar(
+              radius: 100,
+              child:  value.imagePath!=null? Image.memory(value.imagePath as Uint8List)
+                  :Icon(Icons.image_rounded,size: 50,),
+
+            ),
+          ),
 
 
+
+        );
+      },
 
     );
   }
