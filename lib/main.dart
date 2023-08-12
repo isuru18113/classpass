@@ -12,7 +12,7 @@ void main() {
 
       ChangeNotifierProvider<ImagePathProvider>(
         create: (context) => ImagePathProvider(),
-        child: const MyHomePage(),
+        child:  const MyHomePage(),
       ),
   );
 

@@ -1,10 +1,8 @@
-import 'dart:io';
-import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+
 import 'package:provider/provider.dart';
 
 import '../../routes/routes.dart';
@@ -19,30 +17,30 @@ class AdminRegisterPage extends StatefulWidget {
 }
 
 class _AdminRegisterPageState extends State<AdminRegisterPage> {
+  // String? imagePathProvider = ImagePathProvider().imagePath;
+  ImagePathProvider imagePathProvider = ImagePathProvider();
 
- // String? imagePathProvider = ImagePathProvider().imagePath;
+  @override
+  void dispose() {
+    super.dispose();
+
+    imagePathProvider.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-
- //   final imagePathProvider = Provider.of<ImagePathProvider>(context);
-
+    //   final imagePathProvider = Provider.of<ImagePathProvider>(context);
 
     return Scaffold(
-
-      appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.register_selection_title),
-      ),
-      body: accountRegistrationWidget()
-
-    );
-
-
-
+        appBar: AppBar(
+          title: Text(AppLocalizations.of(context)!.register_selection_title),
+        ),
+        body: accountRegistrationWidget());
   }
 
-  Widget accountRegistrationWidget(){
+  Widget accountRegistrationWidget() {
     return ListView(
+
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -52,100 +50,91 @@ class _AdminRegisterPageState extends State<AdminRegisterPage> {
           padding: const EdgeInsets.all(8.0),
           child: firstName(),
         ),
-
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: lastName(),
         ),
 
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Align
+            (alignment: Alignment.centerRight,
+              child: createAccount()),
+        )
       ],
     );
   }
 
-
-  Widget userAccountImage(){
+  Widget userAccountImage() {
     return Consumer<ImagePathProvider>(
+      builder: (context, imagePathProvider, _) {
+        return Center(
+            child: InkWell(
+          onTap: () {
+            GetImageFromCamera.getImageFromCamera(context);
+          },
+          customBorder: const CircleBorder(),
+          borderRadius: BorderRadius.circular(100),
+          child: CircleAvatar(
+            radius: 100,
 
-      builder: (BuildContext context, value, Widget? child) {
 
-        print("paiyoo " + value.imagePath.toString());
 
-        return  GridTile(
 
-          child:  InkWell(
+            child: imagePathProvider.stringValue != null? Image.memory(
+                imagePathProvider.stringValue!.bytes
+            ):const Icon(Icons.image_rounded),
 
-            onTap: (){
 
-              // GoRouter.of(context).push(Routes.imageCropperPage);
-
-              GetImageFromCamera.getImageFromCamera(context).whenComplete(() {
-
-              });
-
-            },
-            customBorder: const CircleBorder(),
-            borderRadius: BorderRadius.circular(100),
-            child: CircleAvatar(
-              radius: 100,
-              child:  value.imagePath!=null? Image.memory(value.imagePath as Uint8List)
-                  :Icon(Icons.image_rounded,size: 50,),
-
-            ),
           ),
-
-
-
-        );
+        ));
       },
-
     );
   }
 
-  Widget firstName(){
-
-    return  const Card(
+  Widget firstName() {
+    return const Card(
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 0,horizontal: 8),
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
         child: TextField(
-
-
           decoration: InputDecoration(
               border: InputBorder.none,
               //hintText: 'Enter text here',
-              labelText: "First Name"
-          ),
+              labelText: "First Name"),
         ),
       ),
     );
   }
 
-  Widget lastName(){
-
-    return  const Card(
+  Widget lastName() {
+    return const Card(
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 0,horizontal: 8),
+        padding: EdgeInsets.symmetric(vertical: 0, horizontal: 8),
         child: TextField(
-
-
           decoration: InputDecoration(
-            border: InputBorder.none,
-            //hintText: 'Enter text here',
-            labelText: "Last Name"
-          ),
+              border: InputBorder.none,
+              //hintText: 'Enter text here',
+              labelText: "Last Name"),
         ),
       ),
     );
   }
 
-  Widget addressName(){
-
-    return  TextField(
-
+  Widget addressName() {
+    return TextField(
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'First Name',
       ),
     );
   }
-}
 
+  ///Create Button
+  Widget createAccount() {
+    return FilledButton(
+        onPressed: () {
+
+        },
+        child: Text(AppLocalizations.of(context)!.button_next));
+  }
+}

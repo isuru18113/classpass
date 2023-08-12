@@ -1,14 +1,13 @@
-import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
-
 import 'package:custom_image_crop/custom_image_crop.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../utils/image_path_provider.dart';
+import '../../widgets/custom_loading.dart';
 
 class ImageCropperPage extends StatefulWidget {
   final String capturedImagePath;
@@ -57,33 +56,22 @@ class _ImageCropperPageState extends State<ImageCropperPage> {
       bottomNavigationBar: imageCropperControllers(),
       floatingActionButton: FloatingActionButton.extended(
 
+
+
         onPressed: () async {
+
+          CustomLoadingDialog(title: 'රැඳී සිටින්න', context: context).showAlertDialog();
+
 
           final image = await _controllerImageCropper.onCropImage();
 
           if (image != null) {
 
-          //  print("croped image patrh" + image.toString());
-            Uint8List _image = base64Decode(image.toString());
-          //  final Uint8List imageData = image.bytes;
-
-           // print("Image bytes " + _image.toString());
-
-            // setState(()  {
-            //   imagePathProvider.setImagePath(image);
-            // });
-
-       //     print("set iamge path" + imagePathProvider.imagePath!.bytes.toString());
-
-         //
-            aleertDi(_image);
-
-            //sendNExt();
+            setCroppedImage(image);
+            sendNExt();
+           sendNExt();
 
 
-            //sendNExt();
-
-            //  Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context) => ResultScreen(image: image)));
           }
         },
         icon: Icon(Icons.crop),
@@ -92,29 +80,12 @@ class _ImageCropperPageState extends State<ImageCropperPage> {
     );
   }
 
-  void aleertDi(Uint8List image){
+  void setCroppedImage(MemoryImage image){
 
-    Uint8List _image = base64Decode(imagePathProvider.imagePath!.bytes.toString());
-
-  //  image = Image.memory(imagePathProvider.imagePath!.bytes);
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return  AlertDialog(
-          title: Text("My title"),
-          content: SizedBox(
-            width: 100,
-            child: Image.memory(_image)
-          ),
-          actions: [
-
-          ],
-        );
-      },
-    );
-
+    Provider.of<ImagePathProvider>(context, listen: false).stringValue = image;
   }
+
+
 
 void sendNExt(){
 
@@ -157,6 +128,7 @@ void sendNExt(){
             icon: const Icon(Icons.rotate_right),
             onPressed: () => _controllerImageCropper
                 .addTransition(CropImageData(angle: pi / 4))),
+
       ],
     );
   }
